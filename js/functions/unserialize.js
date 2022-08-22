@@ -1,0 +1,1 @@
+export const unserialize = string => document.createRange().createContextualFragment(string)

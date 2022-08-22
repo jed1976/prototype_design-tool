@@ -1,0 +1,21 @@
+sidebar-l {
+  overflow: hidden;
+}
+
+sidebar-l > * {
+  display: flex;
+  flex-wrap: wrap;
+  margin: calc(var(--s1) / 2 * -1);
+}
+
+sidebar-l > * > * {
+  flex-grow: 1;
+  margin: calc(var(--s1) / 2);
+}
+
+sidebar-l[side="left"] > * > :last-child,
+sidebar-l[side="right"] > * > :first-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: calc(50% - var(--s1));
+}

@@ -1,0 +1,11 @@
+box-l.sidebar {
+  --border: 1px;
+  justify-content: flex-start;
+  background-color: var(--c1);
+  border-color: var(--c3);
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  height: 100vh;
+  top: 0;
+}

@@ -1,0 +1,41 @@
+.form {
+  background-color: var(--c2);
+}
+
+.form box-l {
+  --border: 1px;
+  border-color: var(--c3);
+}
+
+.form box-l > * {
+  --border: 0;
+}
+
+/* Fieldset */
+.form-fieldset {
+  background-color: var(--c1);
+  border: 0;
+}
+
+.form-fieldset .form-fieldset {
+  border: 0;
+  padding-bottom: 0;
+}
+
+/* Legend */
+.form-legend {}
+
+/* Label */
+.form-label {
+  flex: 1;
+  order: 0;
+}
+
+.form .form-field {
+  order: 2;
+}
+
+.form-field-group {
+  order: 2;
+  width: 100%;
+}

@@ -1,0 +1,1 @@
+export const removeChildNodes = node => Array.from(node.childNodes).map(node => node.remove())

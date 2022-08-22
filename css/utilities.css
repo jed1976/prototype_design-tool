@@ -1,0 +1,12 @@
+.margin-left--auto {
+	margin-left: auto !important;
+}
+
+.margin-right--auto {
+	margin-right: auto !important;
+}
+
+.margin-vertical--auto {
+	margin-bottom: auto;
+	margin-top: auto;
+}

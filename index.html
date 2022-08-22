@@ -1,0 +1,892 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Untitled</title>
+
+	<link href="/demo_2/css/index.css" rel="preload" as="style">
+
+	<link href="/demo_2/css/index.css" rel="stylesheet">
+	<script src="/demo_2/js/index.js" type="module"></script>
+</head>
+<body ontouchstart>
+	<template id="component-template">
+		<style id="${component}-style">.${component} { color: #000000; }</style>
+		<script id="${component}-script"></script>
+		<div class="component-canvas" contenteditable id="${component}-template">
+			${element}
+		</div>
+	</template>
+
+	<template id="component-display-box">
+		<box-l class="component" id="${component}--${state}" padding="0" role="presentation"></box-l>
+	</template>
+
+	<box-l padding="0">
+		<sidebar-l contentmin="75%" sidewidth="12rem" space="0">
+			<div>
+				<box-l class="sidebar" padding="var(--s0)">
+					<stack-l space="var(--s2)" splitafter="1">
+						<stack-l space="var(--s0)">
+							<h1 class="t-4 t-bold">Components</h1>
+
+							<nav>
+								<stack-l class="component-list" id="component-list" role="list" space="var(--s0)"></stack-l>
+							</nav>
+						</stack-l>
+
+						<form action="/" autocomplete="off" method="GET">
+							<stack-l space="var(--s-2)">
+								<input name="action" type="hidden" value="new-component">
+								<input class="form-field form-field-input" name="component" placeholder="Component name" type="text">
+								<button class="button" type="submit">Add</button>
+							</stack-l>
+						</form>
+					</stack-l>
+				</box-l>
+
+				<box-l padding="0">
+					<sidebar-l contentmin="66.666%" side="right" sidewidth="23rem" space="0">
+						<div class="workspace" id="workspace">
+							<box-l class="canvas" padding="0">
+								<cover-l centered="box-l" id="canvas" minheight="50vh"></cover-l>
+							</box-l>
+
+							<form action="/" autocomplete="off" class="form" id="component-styles-form" method="POST">
+								<stack-l>
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Padding</legend>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="padding-top">Top</label>
+														<input class="form-field form-field-range" data-transform="rem" min="0" max="16" id="padding-top" name="padding-top" step=".125" tabindex="0" type="range" value="0">
+														<output class="form-field-output t-code" for="padding-top" name="padding-top-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="padding-right">Right</label>
+														<input class="form-field form-field-range" data-transform="rem" min="0" max="16" id="padding-right" name="padding-right" step=".125" tabindex="0" type="range" value="0">
+														<output class="form-field-output t-code" for="padding-right" name="padding-right-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="padding-bottom">Bottom</label>
+														<input class="form-field form-field-range" data-transform="rem" min="0" max="16" id="padding-bottom" name="padding-bottom" step=".125" tabindex="0" type="range" value="0">
+														<output class="form-field-output t-code" for="padding-bottom" name="padding-bottom-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="padding-left">Left</label>
+														<input class="form-field form-field-range" data-transform="rem" min="0" max="16" id="padding-left" name="padding-left" step=".125" tabindex="0" type="range" value="0">
+														<output class="form-field-output t-code" for="padding-left" name="padding-left-value"></output>
+													</div>
+												</cluster-l>
+											</stack-l>
+										</box-l>
+									</fieldset>
+
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Background</legend>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="background-color">Color</label>
+														<input class="form-field form-field-color" data-transform="color" id="background-color" name="background-color" type="color" value="#000000">
+														<output class="form-field-output t-code" for="background-color" name="background-color-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="background-image">Image</label>
+														<input accept="image/*" class="form-field form-field-input form-field-file" data-css-prop="background-image" data-transform="backgroundImage" id="background-image" name="background-image" type="file">
+														<output class="form-field-output t-code" for="background-image" name="background-image-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="background-attachment">Attachment</label>
+														<select class="form-field form-field-input form-field-select" id="background-attachment" name="background-attachment" value="scroll">
+															<option value="scroll">Scroll</option>
+															<option value="fixed">Fixed</option>
+															<option value="local">Local</option>
+														</select>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="background-clip">Clip</label>
+														<select class="form-field form-field-input form-field-select" id="background-clip" name="background-clip" value="border-box">
+															<option value="border-box">Border</option>
+															<option value="content-box">Content</option>
+															<option value="padding-box">Padding</option>
+															<option value="text">Text</option>
+														</select>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="background-origin">Origin</label>
+														<select class="form-field form-field-input form-field-select" id="background-origin" name="background-origin" value="padding-box">
+															<option value="border-box">Border</option>
+															<option value="content-box">Content</option>
+															<option value="padding-box">Padding</option>
+														</select>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="background-position">Position</label>
+														<select class="form-field form-field-input form-field-select" id="background-position" name="background-position" value="left top">
+															<optgroup label="Left">
+																<option value="left top">Top</option>
+																<option value="left center">Center</option>
+																<option value="left bottom">Bottom</option>
+															</optgroup>
+
+															<optgroup label="Center">
+																<option value="center top">Top</option>
+																<option value="center center">Center</option>
+																<option value="center bottom">Bottom</option>
+															</optgroup>
+
+															<optgroup label="Right">
+																<option value="right top">Top</option>
+																<option value="right center">Center</option>
+																<option value="right bottom">Bottom</option>
+															</optgroup>
+														</select>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="background-repeat">Repeat</label>
+														<select class="form-field form-field-input form-field-select" id="background-repeat" name="background-repeat" value="repeat">
+															<option value="no-repeat">No repeat</option>
+															<option value="repeat">Repeat</option>
+															<option value="repeat-x">Repeat X</option>
+															<option value="repeat-y">Repeat Y</option>
+															<option value="round">Round</option>
+															<option value="space">Space</option>
+														</select>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="background-size">Size</label>
+														<select class="form-field form-field-input form-field-select" id="background-size" name="background-size" value="auto">
+															<option value="auto">Auto</option>
+															<option value="contain">Contain</option>
+															<option value="cover">Cover</option>
+														</select>
+													</div>
+												</cluster-l>
+											</stack-l>
+										</box-l>
+									</fieldset>
+
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Shadow</legend>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="box-shadow-offset-x">Offset X</label>
+														<input class="form-field form-field-range" data-css-prop="box-shadow" data-transform="box-shadow" min="-4" max="4" id="box-shadow-offset-x" name="box-shadow-offset-x" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="box-shadow-offset-x" name="box-shadow-offset-x-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="box-shadow-offset-y">Offset Y</label>
+														<input class="form-field form-field-range" data-css-prop="box-shadow" data-transform="box-shadow" min="-4" max="4" id="box-shadow-offset-y" name="box-shadow-offset-y" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="box-shadow-offset-y" name="box-shadow-offset-y-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="box-shadow-blur">Blur</label>
+														<input class="form-field form-field-range" data-css-prop="box-shadow" data-transform="box-shadow" min="0" max="4" id="box-shadow-blur" name="box-shadow-blur" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="box-shadow-blur" name="box-shadow-blur-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="box-shadow-spread">Spread</label>
+														<input class="form-field form-field-range" data-css-prop="box-shadow" data-transform="box-shadow" min="0" max="4" id="box-shadow-spread" name="box-shadow-spread" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="box-shadow-spread" name="box-shadow-spread-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="box-shadow-color">Color</label>
+														<input class="form-field form-field-color" data-css-prop="box-shadow" data-transform="box-shadow" id="box-shadow-color" name="box-shadow-color" type="color" value="#000000">
+														<output class="form-field-output t-code" for="box-shadow-color" name="box-shadow-color-value"></output>
+													</div>
+												</cluster-l>
+											</stack-l>
+										</box-l>
+									</fieldset>
+
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Borders</legend>
+
+												<stack-l class="tablist-root" space="var(--s-1)">
+													<box-l padding="var(--s0)" style="--border: 0">
+														<cluster-l justify="flex-start" space="0">
+															<ul class="t-5 tablist" role="tablist">
+																<li role="presentation">
+																	<a class="tablist__tab" role="tab" href="#border-top-section" id="border-top-tab" aria-selected="true">Top</a>
+																</li>
+																<li role="presentation">
+																	<a class="tablist__tab" role="tab" href="#border-right-section" id="border-right-tab">Right</a>
+																</li>
+																<li role="presentation">
+																	<a class="tablist__tab" role="tab" href="#border-bottom-section" id="border-bottom-tab">Bottom</a>
+																</li>
+																<li role="presentation">
+																	<a class="tablist__tab" role="tab" href="#border-left-section" id="border-left-tab">Left</a>
+																</li>
+															</ul>
+														</cluster-l>
+													</box-l>
+
+													<section role="tabpanel" id="border-top-section" aria-labelledby="border-top-tab">
+														<fieldset class="form-fieldset">
+															<legend class="t-bold t-hidden">Top</legend>
+
+															<stack-l space="var(--s0)">
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-top-style">Style</label>
+																		<select class="form-field form-field-input form-field-select" id="border-top-style" name="border-top-style" value="none">
+																			<option value="none">None</option>
+																			<option value="dashed">Dashed</option>
+																			<option value="dotted">Dotted</option>
+																			<option value="solid">Solid</option>
+																		</select>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-top-width">Width</label>
+																		<input class="form-field form-field-range" data-transform="rem" id="border-top-width" min="0" max="16" name="border-top-width" step=".125" type="range" value="0">
+																		<output class="form-field-output t-code" for="border-top-width" name="border-top-width-value"></output>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-top-color">Color</label>
+																		<input class="form-field form-field-color" data-transform="color" id="border-top-color" name="border-top-color" type="color" value="#000000">
+																		<output class="form-field-output t-code" for="border-top-color" name="border-top-color-value"></output>
+																	</div>
+																</cluster-l>
+															</stack-l>
+														</fieldset>
+													</section>
+
+													<section role="tabpanel" id="border-right-section" aria-labelledby="border-right-tab">
+														<fieldset class="form-fieldset">
+															<legend class="t-bold t-hidden">Right</legend>
+
+															<stack-l space="var(--s0)">
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-right-style">Style</label>
+																		<select class="form-field form-field-input form-field-select" id="border-right-style" name="border-right-style" value="none">
+																			<option value="none">None</option>
+																			<option value="dashed">Dashed</option>
+																			<option value="dotted">Dotted</option>
+																			<option value="solid">Solid</option>
+																		</select>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-right-width">Width</label>
+																		<input class="form-field form-field-range" data-transform="rem" id="border-right-width" min="0" max="16" name="border-right-width" step=".125" type="range" value="0">
+																		<output class="form-field-output t-code" for="border-right-width" name="border-right-width-value"></output>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-right-color">Color</label>
+																		<input class="form-field form-field-color" data-transform="color" id="border-right-color" name="border-right-color" type="color" value="#000000">
+																		<output class="form-field-output t-code" for="border-right-color" name="border-right-color-value"></output>
+																	</div>
+																</cluster-l>
+															</stack-l>
+														</fieldset>
+													</section>
+
+													<section role="tabpanel" id="border-bottom-section" aria-labelledby="border-bottom-tab">
+														<fieldset class="form-fieldset">
+															<legend class="t-bold t-hidden">Bottom</legend>
+
+															<stack-l space="var(--s0)">
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-bottom-style">Style</label>
+																		<select class="form-field form-field-input form-field-select" id="border-bottom-style" name="border-bottom-style" value="none">
+																			<option value="none">None</option>
+																			<option value="dashed">Dashed</option>
+																			<option value="dotted">Dotted</option>
+																			<option value="solid">Solid</option>
+																		</select>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-bottom-width">Width</label>
+																		<input class="form-field form-field-range" data-transform="rem" id="border-bottom-width" min="0" max="16" name="border-bottom-width" step=".125" type="range" value="0">
+																		<output class="form-field-output t-code" for="border-bottom-width" name="border-bottom-width-value"></output>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-bottom-color">Color</label>
+																		<input class="form-field form-field-color" data-transform="color" id="border-bottom-color" name="border-bottom-color" type="color" value="#000000">
+																		<output class="form-field-output t-code" for="border-bottom-color" name="border-bottom-color-value"></output>
+																	</div>
+																</cluster-l>
+															</stack-l>
+														</fieldset>
+													</section>
+
+													<section role="tabpanel" id="border-left-section" aria-labelledby="border-left-tab">
+														<fieldset class="form-fieldset">
+															<legend class="t-bold t-hidden">Left</legend>
+
+															<stack-l space="var(--s0)">
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-left-style">Style</label>
+																		<select class="form-field form-field-input form-field-select" id="border-left-style" name="border-left-style" value="none">
+																			<option value="none">None</option>
+																			<option value="dashed">Dashed</option>
+																			<option value="dotted">Dotted</option>
+																			<option value="solid">Solid</option>
+																		</select>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-left-width">Width</label>
+																		<input class="form-field form-field-range" data-transform="rem" id="border-left-width" min="0" max="16" name="border-left-width" step=".125" type="range" value="0">
+																		<output class="form-field-output t-code" for="border-left-width" name="border-left-width-value"></output>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="border-left-color">Color</label>
+																		<input class="form-field form-field-color" data-transform="color" id="border-left-color" name="border-left-color" type="color" value="#000000">
+																		<output class="form-field-output t-code" for="border-left-color" name="border-left-color-value"></output>
+																	</div>
+																</cluster-l>
+															</stack-l>
+														</fieldset>
+													</section>
+												</stack-l>
+											</stack-l>
+										</box-l>
+									</fieldset>
+
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Radius</legend>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="border-top-left-radius">Top-Left</label>
+														<input class="form-field form-field-range" data-transform="rem" id="border-top-left-radius" min="0" max="8" name="border-top-left-radius" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="border-top-left-radius" name="border-top-left-radius-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="border-top-right-radius">Top-Right</label>
+														<input class="form-field form-field-range" data-transform="rem" id="border-top-right-radius" min="0" max="8" name="border-top-right-radius" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="border-top-right-radius" name="border-top-right-radius-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="border-bottom-left-radius">Bottom-Left</label>
+														<input class="form-field form-field-range" data-transform="rem" id="border-bottom-left-radius" min="0" max="8" name="border-bottom-left-radius" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="border-bottom-left-radius" name="border-bottom-left-radius-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="border-bottom-right-radius">Bottom-Right</label>
+														<input class="form-field form-field-range" data-transform="rem" id="border-bottom-right-radius" min="0" max="8" name="border-bottom-right-radius" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="border-bottom-right-radius" name="border-bottom-right-radius-value"></output>
+													</div>
+												</cluster-l>
+											</stack-l>
+										</box-l>
+									</fieldset>
+
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Transforms</legend>
+
+												<stack-l class="tablist-root" space="var(--s-1)">
+													<box-l padding="var(--s0)" style="--border: 0">
+														<cluster-l justify="flex-start" space="0">
+															<ul class="t-5 tablist" role="tablist">
+																<li role="presentation">
+																	<a class="tablist__tab" role="tab" href="#transform-origin-section" id="transform-origin-tab" aria-selected="true">Origin</a>
+																</li>
+																<li role="presentation">
+																	<a class="tablist__tab" role="tab" href="#transform-scale-section" id="transform-scale-tab">Scale</a>
+																</li>
+																<li role="presentation">
+																	<a class="tablist__tab" role="tab" href="#transform-skew-section" id="transform-skew-tab">Skew</a>
+																</li>
+																<li role="presentation">
+																	<a class="tablist__tab" role="tab" href="#transform-translate-section" id="transform-translate-tab">Translate</a>
+																</li>
+															</ul>
+														</cluster-l>
+													</box-l>
+
+													<section role="tabpanel" id="transform-origin-section" aria-labelledby="transform-origin-tab">
+														<fieldset class="form-fieldset">
+															<legend class="t-bold t-hidden">Origin</legend>
+
+															<stack-l space="var(--s0)">
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="transform-origin-x">X</label>
+																		<input class="form-field form-field-range" data-css-prop="transform-origin" data-transform="transform-origin" min="-100" max="100" id="transform-origin-x" name="transform-origin-x" step="1" type="range" value="0">
+																		<output class="form-field-output t-code" for="transform-origin-x" name="transform-origin-x-value"></output>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="transform-origin-y">Y</label>
+																		<input class="form-field form-field-range" data-css-prop="transform-origin" data-transform="transform-origin" min="-100" max="100" id="transform-origin-y" name="transform-origin-y" step="1" type="range" value="0">
+																		<output class="form-field-output t-code" for="transform-origin-y" name="transform-origin-y-value"></output>
+																	</div>
+																</cluster-l>
+															</stack-l>
+														</fieldset>
+													</section>
+
+													<section role="tabpanel" id="transform-scale-section" aria-labelledby="transform-scale-tab">
+														<fieldset class="form-fieldset">
+															<legend class="t-bold t-hidden">Scale</legend>
+
+															<stack-l space="var(--s0)">
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="transform-scale-x">X</label>
+																		<input class="form-field form-field-range" data-css-prop="transform" data-transform="transform" min="-4" max="4" id="transform-scale-x" name="transform-scale-x" step=".0625" type="range" value="1">
+																		<output class="form-field-output t-code" for="transform-scale-x" name="transform-scale-x-value"></output>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="transform-scale-y">Y</label>
+																		<input class="form-field form-field-range" data-css-prop="transform" data-transform="transform" min="-4" max="4" id="transform-scale-y" name="transform-scale-y" step=".0625" type="range" value="1">
+																		<output class="form-field-output t-code" for="transform-scale-y" name="transform-scale-y-value"></output>
+																	</div>
+																</cluster-l>
+															</stack-l>
+														</fieldset>
+													</section>
+
+													<section role="tabpanel" id="transform-skew-section" aria-labelledby="transform-skew-tab">
+														<fieldset class="form-fieldset">
+															<legend class="t-bold t-hidden">Skew</legend>
+
+															<stack-l space="var(--s0)">
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="transform-skew-x">X</label>
+																		<input class="form-field form-field-range" data-css-prop="transform" data-transform="transform" min="-4" max="4" id="transform-skew-x" name="transform-skew-x" step=".0625" type="range" value="0">
+																		<output class="form-field-output t-code" for="transform-skew-x" name="transform-skew-x-value"></output>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="transform-skew-y">Y</label>
+																		<input class="form-field form-field-range" data-css-prop="transform" data-transform="transform" min="-4" max="4" id="transform-skew-y" name="transform-skew-y" step=".0625" type="range" value="0">
+																		<output class="form-field-output t-code" for="transform-skew-y" name="transform-skew-y-value"></output>
+																	</div>
+																</cluster-l>
+															</stack-l>
+														</fieldset>
+													</section>
+
+													<section role="tabpanel" id="transform-translate-section" aria-labelledby="transform-translate-tab">
+														<fieldset class="form-fieldset">
+															<legend class="t-bold t-hidden">Translate</legend>
+
+															<stack-l space="var(--s0)">
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="transform-translate-x">X</label>
+																		<input class="form-field form-field-range" data-css-prop="transform" data-transform="transform" min="-2048" max="2048" id="transform-translate-x" name="transform-translate-x" step="1" type="range" value="0">
+																		<output class="form-field-output t-code" for="transform-translate-x" name="transform-translate-x-value"></output>
+																	</div>
+																</cluster-l>
+
+																<cluster-l justify="flex-start" space="var(--s-2)">
+																	<div>
+																		<label class="form-label" for="transform-translate-y">Y</label>
+																		<input class="form-field form-field-range" data-css-prop="transform" data-transform="transform" min="-2048" max="2048" id="transform-translate-y" name="transform-translate-y" step="1" type="range" value="0">
+																		<output class="form-field-output t-code" for="transform-translate-y" name="transform-translate-y-value"></output>
+																	</div>
+																</cluster-l>
+															</stack-l>
+														</fieldset>
+													</section>
+												</stack-l>
+											</stack-l>
+										</box-l>
+									</fieldset>
+
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Font</legend>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="font-family">Family</label>
+
+														<select class="form-field form-field-input form-field-select" data-transform="font-family" id="font-family" name="font-family" value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+															<optgroup label="Sans-serif">
+																<option value="Arial, 'Helvetica Neue', Helvetica, sans-serif">Arial</option>
+																<option value="'Arial Black', 'Arial Bold', Gadget, sans-serif">Arial Black</option>
+																<option value="'Arial Narrow',Arial, sans-serif">Arial Narrow</option>
+																<option value="'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif">Arial Rounded MT Bold</option>
+																<option value="'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, AppleGothic, sans-serif">Avant Garde</option>
+																<option value="Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Calibri</option>
+																<option value="Candara, Calibri, Segoe,' Segoe UI', Optima, Arial, sans-serif">Candara</option>
+																<option value="'Century Gothic', CenturyGothic, AppleGothic, sans-serif">Century Gothic</option>
+																<option value="'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif">Franklin Gothic Medium</option>
+																<option value="Futura, 'Trebuchet MS', Arial, sans-serif">Futura</option>
+																<option value="Geneva, Tahoma, Verdana, sans-serif">Geneva</option>
+																<option value="'Gill Sans', 'Gill Sans MT',Calibri,sans-serif">Gill Sans</option>
+																<option value="'Helvetica Neue', Helvetica, Arial, sans-serif">Helvetica</option>
+																<option value="Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', Arial Black, sans serif">Impact</option>
+																<option value="'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif">Lucida Grande</option>
+																<option value="Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif">Optima</option>
+																<option value="Segoe UI,Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif">Segoe UI</option>
+																<option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">System</option>
+																<option value="Tahoma, Verdana, Segoe, sans-serif">Tahoma</option>
+																<option value="Trebuchet MS, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif">Trebuchet</option>
+																<option value="Verdana, Geneva, sans-serif">Verdana</option>
+															</optgroup>
+
+															<optgroup label="Serif">
+																<option value="Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif">Baskerville</option>
+																<option value="'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif">Big Caslon</option>
+																<option value="'Bodoni MT', Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif">Bodoni MT</option>
+																<option value="'Book Antiqua', Palatino, 'Palatino Linotype', 'Palatino LT STD', Georgia, serif">Book Antiqua</option>
+																<option value="'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif">Calisto MT</option>
+																<option value="Cambria, Georgia, serif">Cambria</option>
+																<option value="Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif">Didot</option>
+																<option value="Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif">Garamond</option>
+																<option value="Georgia, Times, 'Times New Roman', serif">Georgia</option>
+																<option value="'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman', serif">Goudy Old Style</option>
+																<option value="Hoefler Text, 'Baskerville Old Face', Garamond, 'Times New Roman', serif">Hoefler Text</option>
+																<option value="'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', Georgia, serif">Palatino Linotype</option>
+																<option value="Perpetua, Baskerville, 'Big Caslon', 'Palatino Linotype', Palatino, 'URW Palladio L', 'Nimbus Roman No9 L', serif">Perpetua</option>
+																<option value="Rockwell, 'Courier Bold', Courier, Georgia, Times, 'Times New Roman', serif">Rockwell</option>
+																<option value="'Rockwell Extra Bold', 'Rockwell Bold', monospace">Rockwell Extra Bold</option>
+																<option value="TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif">Times New Roman</option>
+															</optgroup>
+
+															<optgroup label="Monospaced">
+																<option value="Andale Mono, AndaleMono, monospace">Andale Mono</option>
+																<option value="Consolas, monaco, monospace">Consolas</option>
+																<option value="Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace">Courier</option>
+																<option value="'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace">Courier New</option>
+																<option value="'Lucida Console', 'Lucida Sans Typewriter', monaco, 'Bitstream Vera Sans Mono', monospace">Lucida Console</option>
+																<option value="'Lucida Sans Typewriter', 'Lucida Console', monaco, 'Bitstream Vera Sans Mono', monospace">Lucida Sans Typewriter</option>
+																<option value="Monaco, Consolas, 'Lucida Console', monospace">Monaco</option>
+															</optgroup>
+
+															<optgroup label="Fantasy">
+																<option value="Copperplate, 'Copperplate Gothic Light', fantasy">Copperplate</option>
+																<option value="Papyrus, fantasy">Papyrus</option>
+																</optgroup>
+
+															<optgroup label="Script">
+																<option value="Brush Script MT, cursive">Brush Script MT</option>
+															</optgroup>
+														</select>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="font-size">Size</label>
+														<input class="form-field form-field-range" data-transform="typeScale" min="-2" max="7" id="font-size" name="font-size" type="range" value="0">
+														<output class="form-field-output t-code" for="font-size" name="font-size-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="font-weight">Weight</label>
+														<input class="form-field form-field-range" min="100" max="1000" id="font-weight" name="font-weight" step="100" type="range" value="400">
+														<output class="form-field-output t-code" for="font-weight" name="font-weight-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="font-style">Style</label>
+														<select class="form-field form-field-input form-field-select" id="font-style" name="font-style" value="normal">
+															<option value="normal">Normal</option>
+															<option value="italic">Italic</option>
+															<option value="oblique">Oblique</option>
+														</select>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="font-variant">Variant</label>
+														<select class="form-field form-field-input form-field-select" id="font-variant" name="font-variant" value="normal">
+															<option value="normal">Normal</option>
+															<option value="small-caps">Small caps</option>
+														</select>
+													</div>
+												</cluster-l>
+
+												<details>
+													<summary class="t-5 form-field-summary">Advanced</summary>
+
+													<stack-l space="var(--s0)">
+														<cluster-l justify="flex-start" space="var(--s-2)">
+															<div>
+																<label class="form-label" for="font-kerning">Kerning</label>
+																<select class="form-field form-field-input form-field-select" id="font-kerning" name="font-kerning" value="auto">
+																	<option value="auto">Auto</option>
+																	<option value="normal">Normal</option>
+																	<option value="none">None</option>
+																</select>
+															</div>
+														</cluster-l>
+
+														<cluster-l justify="flex-start" space="var(--s-2)">
+															<div>
+																<label class="form-label" for="font-optical-sizing">Optical sizing</label>
+																<select class="form-field form-field-input form-field-select" id="font-optical-sizing" name="font-optical-sizing" value="auto">
+																	<option value="auto">Auto</option>
+																	<option value="none">None</option>
+																</select>
+															</div>
+														</cluster-l>
+
+														<cluster-l justify="flex-start" space="var(--s-2)">
+															<div>
+																<label class="form-label" for="font-stretch">Stretch</label>
+																<select class="form-field form-field-input form-field-select" id="font-stretch" name="font-stretch" value="normal">
+																	<option value="ultra-condensed">Ultra condensed</option>
+																	<option value="extra-condensed">Extra condensed</option>
+																	<option value="semi-condensed">Semi Condensed</option>
+																	<option value="normal">Normal</option>
+																	<option value="semi-expanded">Semi expanded</option>
+																	<option value="expanded">Expanded</option>
+																	<option value="extra-expanded">Extra expanded</option>
+																	<option value="ultra-expanded">Ultra expanded</option>
+																</select>
+															</div>
+														</cluster-l>
+													</stack-l>
+												</details>
+											</stack-l>
+										</box-l>
+									</fieldset>
+
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Text</legend>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="line-height">Line Spacing</label>
+														<input class="form-field form-field-range" min=".5" max="5" id="line-height" list="line-heights" name="line-height" step=".125" type="range" value="1">
+														<output class="form-field-output t-code" for="line-height" name="line-height-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="letter-spacing">Letter Spacing</label>
+														<input class="form-field form-field-range" data-transform="rem" min="-4" max="4" id="letter-spacing" name="letter-spacing" step=".125" type="range" value="0">
+														<output class="form-field-output t-code" for="letter-spacing" name="letter-spacing-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="text-align">Alignment</label>
+														<select class="form-field form-field-input form-field-select" id="text-align" name="text-align" value="left">
+															<option value="left">Left</option>
+															<option value="center">Center</option>
+															<option value="right">Right</option>
+															<option value="justify">Justify</option>
+														</select>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="text-transform">Capitalization</label>
+														<select class="form-field form-field-input form-field-select" id="text-transform" name="text-transform" value="none">
+															<option value="none">None</option>
+															<option value="capitalize">Capitalize</option>
+															<option value="lowercase">Lower case</option>
+															<option value="uppercase">Upper case</option>
+														</select>
+													</div>
+												</cluster-l>
+
+												<details>
+													<summary class="t-5 form-field-summary">Advanced</summary>
+
+													<stack-l space="var(--s0)">
+														<cluster-l justify="flex-start" space="var(--s-2)">
+															<div>
+																<label class="form-label" for="text-indent">Indent</label>
+																<input class="form-field form-field-range" data-transform="rem" min="-16" max="16" id="text-indent" name="text-indent" step=".125" type="range" value="0">
+																<output class="form-field-output t-code" for="text-indent" name="text-indent-value"></output>
+															</div>
+														</cluster-l>
+
+														<cluster-l justify="flex-start" space="var(--s-2)">
+															<div>
+																<label class="form-label" for="hyphens">Hyphens</label>
+																<select class="form-field form-field-input form-field-select" id="hyphens" name="hyphens" value="none">
+																	<option value="none">None</option>
+																	<option value="manual">Manual</option>
+																	<option value="auto">Auto</option>
+																</select>
+															</div>
+														</cluster-l>
+
+														<cluster-l justify="flex-start" space="var(--s-2)">
+															<div>
+																<label class="form-label" for="white-space">White space</label>
+																<select class="form-field form-field-input form-field-select" id="white-space" name="white-space" value="normal">
+																	<option value="normal">Normal</option>
+																	<option value="nowrap">No wrap</option>
+																	<option value="break-spaces">Break spaces</option>
+																	<option value="pre">Pre</option>
+																	<option value="pre-line">Pre-line</option>
+																	<option value="pre-wrap">Pre-wrap</option>
+																</select>
+															</div>
+														</cluster-l>
+
+														<cluster-l justify="flex-start" space="var(--s-2)">
+															<div>
+																<label class="form-label" for="word-break">Word break</label>
+																<select class="form-field form-field-input form-field-select" id="word-break" name="word-break" value="normal">
+																	<option value="normal">Normal</option>
+																	<option value="break-all">Break all</option>
+																	<option value="break-word">Break word</option>
+																	<option value="keep-all">Keep all</option>
+																</select>
+															</div>
+														</cluster-l>
+
+														<cluster-l justify="flex-start" space="var(--s-2)">
+															<div>
+																<label class="form-label" for="word-spacing">Word spacing</label>
+																<input class="form-field form-field-range" data-transform="rem" min="-16" max="16" id="word-spacing" name="word-spacing" step=".125" type="range" value="0">
+																<output class="form-field-output t-code" for="word-spacing" name="word-spacing-value"></output>
+															</div>
+														</cluster-l>
+													</stack-l>
+												</details>
+											</stack-l>
+										</box-l>
+									</fieldset>
+
+									<fieldset class="form-fieldset">
+										<box-l padding="var(--s0)">
+											<stack-l space="var(--s-1)">
+												<legend class="t-bold form-legend">Color</legend>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="color">Color</label>
+														<input class="form-field form-field-color" data-transform="color" id="color" name="color" type="color" value="#000000">
+														<output class="form-field-output t-code" for="color" name="color-value"></output>
+													</div>
+												</cluster-l>
+
+												<cluster-l justify="flex-start" space="var(--s-2)">
+													<div>
+														<label class="form-label" for="opacity">Opacity</label>
+														<input class="form-field form-field-range" id="opacity" max="1" min="0" name="opacity" step="0.01" type="range" value="1">
+														<output class="form-field-output t-code" for="opacity" name="opacity-value"></output>
+													</div>
+												</cluster-l>
+											</stack-l>
+										</box-l>
+									</fieldset>
+								</stack-l>
+							</form>
+						</div>
+					</sidebar-l>
+				</box-l>
+			</div>
+		</sidebar-l>
+	</box-l>
+
+	<!-- Required: DO NOT REMOVE -->
+	<script> </script>
+</body>
+</html>

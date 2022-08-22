@@ -1,0 +1,77 @@
+:root {
+  /* Scale */
+  --type-ratio: 1.4;
+  --t-2: calc(var(--t-1) / var(--type-ratio));
+	--t-1: calc(var(--t0) / var(--type-ratio));
+	--t0: 1rem;
+	--t1: calc(var(--t0) * var(--type-ratio));
+	--t2: calc(var(--t1) * var(--type-ratio));
+	--t3: calc(var(--t2) * var(--type-ratio));
+	--t4: calc(var(--t3) * var(--type-ratio));
+  --t5: calc(var(--t4) * var(--type-ratio));
+  --t6: calc(var(--t5) * var(--type-ratio));
+  --t7: calc(var(--t6) * var(--type-ratio));
+}
+
+.t-headline {
+  font-size: var(--t5);
+  font-weight: var(--weight-400);
+}
+
+.t-subheadline {
+  font-size: var(--t4);
+  font-weight: var(--weight-400);
+}
+
+.t-1 {
+  font-size: var(--t3);
+  font-weight: var(--weight-400);
+}
+
+.t-2 {
+  font-size: var(--t2);
+  font-weight: var(--weight-400);
+}
+
+.t-3 {
+  font-size: var(--t1);
+  font-weight: var(--weight-400);
+}
+
+.t-4,
+.t-body {
+  font-size: var(--t0);
+  font-weight: var(--weight-400);
+}
+
+.t-5 {
+  font-size: var(--t-1);
+  font-weight: var(--weight-400);
+}
+
+.t-6 {
+  font-size: var(--t-2);
+  font-weight: var(--weight-400);
+}
+
+/* Weights */
+.t-bold {
+  font-weight: 700;
+}
+
+/* Utilities */
+.t-code {
+  font-family: monospace;
+  font-size: var(--t0);
+}
+
+.t-hidden {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(0 0 99.9% 99.9%);
+  height: 1px;
+  overflow: hidden;
+	padding: 0;
+  position: absolute;
+  width: 1px;
+}

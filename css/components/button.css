@@ -1,0 +1,21 @@
+.button {
+  background-color: var(--c5);
+  border-radius: var(--radius);
+  color: var(--c0);
+  display: inline-block;
+  font-size: inherit;
+  min-height: 2.75rem;
+  width: 100%;
+}
+
+.button:focus {
+  border-color: var(--c-primary);
+  border-width: .125rem;
+  outline: 0;
+}
+
+@media (pointer: fine) {
+  .button {
+    min-height: 2rem;
+  }
+}

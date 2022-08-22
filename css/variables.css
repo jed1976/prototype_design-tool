@@ -1,0 +1,59 @@
+:root {
+	/* Scale */
+	--ratio: 1.5;
+	--s-5: calc(var(--s-4) / var(--ratio));
+	--s-4: calc(var(--s-3) / var(--ratio));
+	--s-3: calc(var(--s-2) / var(--ratio));
+	--s-2: calc(var(--s-1) / var(--ratio));
+	--s-1: calc(var(--s0) / var(--ratio));
+	--s0: 1rem;
+	--s1: calc(var(--s0) * var(--ratio));
+	--s2: calc(var(--s1) * var(--ratio));
+	--s3: calc(var(--s2) * var(--ratio));
+	--s4: calc(var(--s3) * var(--ratio));
+	--s5: calc(var(--s4) * var(--ratio));
+
+	/* Border */
+	--border: 0;
+	--border-thin: 1px;
+
+	/* Color */
+	--c-black: #000000;
+	--c-white: #FFFFFF;
+
+	--c-primary: #1976D2;
+	--c-secondary: #1976D2;
+
+	--c0: #FAFAFA;
+	--c1: #F5F5F5;
+	--c2: #E0E0E0;
+	--c3: #BDBDBD;
+	--c4: #757575;
+	--c5: #424242;
+	--c6: #212121;
+
+	/* Fonts */
+	--font-primary: system-ui, sans-serif;
+
+	/* Weights */
+	--weight-400: 400;
+	--weight-700: 700;
+
+	/* Measure */
+	--measure: 60ch;
+
+	/* Radii */
+	--radius: .25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--c6: #FAFAFA;
+		--c5: #F5F5F5;
+		--c4: #E0E0E0;
+		--c3: #BDBDBD;
+		--c2: #757575;
+		--c1: #424242;
+		--c0: #212121;
+	}
+}

@@ -1,0 +1,14 @@
+.component-list {
+  list-style: none;
+  padding: 0;
+}
+
+.component-list__item {
+  border: .125rem solid transparent;
+}
+
+.component-list__item:focus {
+  border-color: var(--c-primary);
+  border-radius: var(--radius);
+  outline: 0;
+}

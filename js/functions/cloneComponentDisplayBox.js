@@ -1,0 +1,1 @@
+export const cloneComponentDisplayBox = () => document.getElementById('component-display-box').content.cloneNode(true).firstElementChild

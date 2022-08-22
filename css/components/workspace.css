@@ -1,0 +1,9 @@
+.workspace {
+  background-color: var(--c2);
+  position: relative;
+}
+
+[data-disabled] .workspace {
+  opacity: .5;
+  pointer-events: none;
+}
